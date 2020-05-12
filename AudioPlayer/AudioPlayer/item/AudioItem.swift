@@ -75,14 +75,36 @@ open class AudioItem: NSObject {
                              mediumQualitySoundAsset: AVURLAsset? = nil,
                              lowQualitySoundAsset: AVURLAsset? = nil) {
         var assets = [AudioQuality: AVURLAsset]()
-        if let highURL = highQualitySoundAsset {
-            assets[.high] = highURL
+        if let highAsset = highQualitySoundAsset {
+            assets[.high] = highAsset
         }
-        if let mediumURL = mediumQualitySoundAsset {
-            assets[.medium] = mediumURL
+        if let mediumAsset = mediumQualitySoundAsset {
+            assets[.medium] = mediumAsset
         }
-        if let lowURL = lowQualitySoundAsset {
-            assets[.low] = lowURL
+        if let lowAsset = lowQualitySoundAsset {
+            assets[.low] = lowAsset
+        }
+        self.init(assets: assets)
+    }
+    
+    /// Initializes an AudioItem. Fails if every urls are nil.
+    ///
+    /// - Parameters:
+    ///   - highQualitySoundURL: The asset for the high quality sound.
+    ///   - mediumQualitySoundURL: The asset for the medium quality sound.
+    ///   - lowQualitySoundURL: The asset for the low quality sound.
+    public convenience init?(highQualitySoundURL: URL? = nil,
+                             mediumQualitySoundURL: URL? = nil,
+                             lowQualitySoundURL: URL? = nil) {
+        var assets = [AudioQuality: AVURLAsset]()
+        if let highURL = highQualitySoundURL {
+            assets[.high] = AVURLAsset(url: highURL)
+        }
+        if let mediumURL = mediumQualitySoundURL {
+            assets[.medium] = AVURLAsset(url: mediumURL)
+        }
+        if let lowURL = lowQualitySoundURL {
+            assets[.low] = AVURLAsset(url: lowURL)
         }
         self.init(assets: assets)
     }
