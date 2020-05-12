@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import AVFoundation
 @testable import AudioPlayer
 
 class AudioItemEventProducer_Tests: XCTestCase {
@@ -17,7 +18,7 @@ class AudioItemEventProducer_Tests: XCTestCase {
     override func setUp() {
         super.setUp()
         listener = FakeEventListener()
-        item = AudioItem(highQualitySoundURL: URL(string: "https://github.com"))
+        item = AudioItem(highQualitySoundAsset: AVURLAsset(url: URL(string: "https://github.com")!))
         producer = AudioItemEventProducer()
         producer.item = item
         producer.eventListener = listener

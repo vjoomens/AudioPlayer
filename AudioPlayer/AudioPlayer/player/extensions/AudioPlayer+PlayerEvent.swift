@@ -124,7 +124,7 @@ extension AudioPlayer {
             }
 
             stateBeforeBuffering = state
-            if reachability.isReachable() || (currentItem?.soundURLs[currentQuality]?.ap_isOfflineURL ?? false) {
+            if reachability.isReachable() || (currentItem?.assets[currentQuality]?.ap_isOfflineURL ?? false) {
                 state = .buffering
             } else {
                 state = .waitingForConnection

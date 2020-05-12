@@ -91,8 +91,8 @@ public class AudioPlayer: NSObject {
                 setAudioSession(active: true)
 
                 //Sets new state
-                let info = currentItem.url(for: currentQuality)
-                if reachability.isReachable() || info.url.ap_isOfflineURL {
+                let info = currentItem.asset(for: currentQuality)
+                if reachability.isReachable() || info.asset.ap_isOfflineURL {
                     state = .buffering
                     backgroundHandler.beginBackgroundTask()
                 } else {
@@ -106,7 +106,7 @@ public class AudioPlayer: NSObject {
                 pausedForInterruption = false
                 
                 //Create new AVPlayerItem
-                let playerItem = AVPlayerItem(url: info.url)
+                let playerItem = AVPlayerItem(asset: info.asset)
                 
                 if #available(iOS 10.0, tvOS 10.0, OSX 10.12, *) {
                     playerItem.preferredForwardBufferDuration = self.preferredForwardBufferDuration

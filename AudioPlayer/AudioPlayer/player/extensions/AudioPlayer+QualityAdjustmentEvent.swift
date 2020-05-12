@@ -40,12 +40,12 @@ extension AudioPlayer {
     ///
     /// - Parameter newQuality: The new quality.
     private func changeQuality(to newQuality: AudioQuality) {
-        guard let url = currentItem?.soundURLs[newQuality] else {
+        guard let asset = currentItem?.assets[newQuality] else {
             return
         }
 
         let cip = currentItemProgression
-        let item = AVPlayerItem(url: url)
+        let item = AVPlayerItem(asset: asset)
         self.updatePlayerItemForBufferingStrategy(item)
 
         qualityIsBeingChanged = true

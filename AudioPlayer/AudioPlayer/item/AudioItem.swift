@@ -31,26 +31,26 @@ public enum AudioQuality: Int {
     case high = 2
 }
 
-// MARK: - AudioItemURL
+// MARK: - AudioItemAsset
 
-/// `AudioItemURL` contains information about an Item URL such as its quality.
-public struct AudioItemURL {
+/// `AudioItemAsset` contains information about an Item Asset such as its quality.
+public struct AudioItemAsset {
     /// The quality of the stream.
     public let quality: AudioQuality
 
-    /// The url of the stream.
-    public let url: URL
+    /// The asset of the stream.
+    public let asset: AVURLAsset
 
-    /// Initializes an AudioItemURL.
+    /// Initializes an AudioItemAsset.
     ///
     /// - Parameters:
     ///   - quality: The quality of the stream.
-    ///   - url: The url of the stream.
-    public init?(quality: AudioQuality, url: URL?) {
-        guard let url = url else { return nil }
+    ///   - asset: The asset of the stream.
+    public init?(quality: AudioQuality, asset: AVURLAsset?) {
+        guard let asset = asset else { return nil }
 
         self.quality = quality
-        self.url = url
+        self.asset = asset
     }
 }
 
@@ -58,85 +58,85 @@ public struct AudioItemURL {
 
 /// An `AudioItem` instance contains every piece of information needed for an `AudioPlayer` to play.
 ///
-/// URLs can be remote or local.
+/// Assets can be remote or local.
 open class AudioItem: NSObject {
     /// Returns the available qualities.
-    public let soundURLs: [AudioQuality: URL]
+    public let assets: [AudioQuality: AVURLAsset]
 
     // MARK: Initialization
 
     /// Initializes an AudioItem. Fails if every urls are nil.
     ///
     /// - Parameters:
-    ///   - highQualitySoundURL: The URL for the high quality sound.
-    ///   - mediumQualitySoundURL: The URL for the medium quality sound.
-    ///   - lowQualitySoundURL: The URL for the low quality sound.
-    public convenience init?(highQualitySoundURL: URL? = nil,
-                             mediumQualitySoundURL: URL? = nil,
-                             lowQualitySoundURL: URL? = nil) {
-        var URLs = [AudioQuality: URL]()
-        if let highURL = highQualitySoundURL {
-            URLs[.high] = highURL
+    ///   - highQualitySoundAsset: The asset for the high quality sound.
+    ///   - mediumQualitySoundAsset: The asset for the medium quality sound.
+    ///   - lowQualitySoundAsset: The asset for the low quality sound.
+    public convenience init?(highQualitySoundAsset: AVURLAsset? = nil,
+                             mediumQualitySoundAsset: AVURLAsset? = nil,
+                             lowQualitySoundAsset: AVURLAsset? = nil) {
+        var assets = [AudioQuality: AVURLAsset]()
+        if let highURL = highQualitySoundAsset {
+            assets[.high] = highURL
         }
-        if let mediumURL = mediumQualitySoundURL {
-            URLs[.medium] = mediumURL
+        if let mediumURL = mediumQualitySoundAsset {
+            assets[.medium] = mediumURL
         }
-        if let lowURL = lowQualitySoundURL {
-            URLs[.low] = lowURL
+        if let lowURL = lowQualitySoundAsset {
+            assets[.low] = lowURL
         }
-        self.init(soundURLs: URLs)
+        self.init(assets: assets)
     }
 
     /// Initializes an `AudioItem`.
     ///
-    /// - Parameter soundURLs: The URLs of the sound associated with its quality wrapped in a `Dictionary`.
-    public init?(soundURLs: [AudioQuality: URL]) {
-        self.soundURLs = soundURLs
+    /// - Parameter assets: The assets of the sound associated with its quality wrapped in a `Dictionary`.
+    public init?(assets: [AudioQuality: AVURLAsset]) {
+        self.assets = assets
         super.init()
 
-        if soundURLs.isEmpty {
+        if assets.isEmpty {
             return nil
         }
     }
 
     // MARK: Quality selection
 
-    /// Returns the highest quality URL found or nil if no URLs are available
-    open var highestQualityURL: AudioItemURL {
+    /// Returns the highest quality asset found or nil if no assets are available
+    open var highestQualityAsset: AudioItemAsset {
         //swiftlint:disable force_unwrapping
-        return (AudioItemURL(quality: .high, url: soundURLs[.high]) ??
-            AudioItemURL(quality: .medium, url: soundURLs[.medium]) ??
-            AudioItemURL(quality: .low, url: soundURLs[.low]))!
+        return (AudioItemAsset(quality: .high, asset: assets[.high]) ??
+            AudioItemAsset(quality: .medium, asset: assets[.medium]) ??
+            AudioItemAsset(quality: .low, asset: assets[.low]))!
     }
 
-    /// Returns the medium quality URL found or nil if no URLs are available
-    open var mediumQualityURL: AudioItemURL {
+    /// Returns the medium quality asset found or nil if no assets are available
+    open var mediumQualityAsset: AudioItemAsset {
         //swiftlint:disable force_unwrapping
-        return (AudioItemURL(quality: .medium, url: soundURLs[.medium]) ??
-            AudioItemURL(quality: .low, url: soundURLs[.low]) ??
-            AudioItemURL(quality: .high, url: soundURLs[.high]))!
+        return (AudioItemAsset(quality: .medium, asset: assets[.medium]) ??
+            AudioItemAsset(quality: .low, asset: assets[.low]) ??
+            AudioItemAsset(quality: .high, asset: assets[.high]))!
     }
 
-    /// Returns the lowest quality URL found or nil if no URLs are available
-    open var lowestQualityURL: AudioItemURL {
+    /// Returns the lowest quality asset found or nil if no assets are available
+    open var lowestQualityAsset: AudioItemAsset {
         //swiftlint:disable force_unwrapping
-        return (AudioItemURL(quality: .low, url: soundURLs[.low]) ??
-            AudioItemURL(quality: .medium, url: soundURLs[.medium]) ??
-            AudioItemURL(quality: .high, url: soundURLs[.high]))!
+        return (AudioItemAsset(quality: .low, asset: assets[.low]) ??
+            AudioItemAsset(quality: .medium, asset: assets[.medium]) ??
+            AudioItemAsset(quality: .high, asset: assets[.high]))!
     }
 
-    /// Returns an URL that best fits a given quality.
+    /// Returns an asset that best fits a given quality.
     ///
-    /// - Parameter quality: The quality for the requested URL.
-    /// - Returns: The URL that best fits the given quality.
-    func url(for quality: AudioQuality) -> AudioItemURL {
+    /// - Parameter quality: The quality for the requested asset.
+    /// - Returns: The asset that best fits the given quality.
+    func asset(for quality: AudioQuality) -> AudioItemAsset {
         switch quality {
         case .high:
-            return highestQualityURL
+            return highestQualityAsset
         case .medium:
-            return mediumQualityURL
+            return mediumQualityAsset
         default:
-            return lowestQualityURL
+            return lowestQualityAsset
         }
     }
 

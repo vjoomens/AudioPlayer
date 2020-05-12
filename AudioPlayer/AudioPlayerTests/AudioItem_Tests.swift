@@ -12,90 +12,90 @@ import AVFoundation
 
 class AudioItem_Tests: XCTestCase {
     func testItemInitializationFailsIfNoValidURLIsGiven() {
-        XCTAssertNil(AudioItem(soundURLs: [:]))
-        XCTAssertNil(AudioItem(highQualitySoundURL: nil, mediumQualitySoundURL: nil, lowQualitySoundURL: nil))
+        XCTAssertNil(AudioItem(assets: [:]))
+        XCTAssertNil(AudioItem(highQualitySoundAsset: nil, mediumQualitySoundAsset: nil, lowQualitySoundAsset: nil))
     }
 
     func testItemXXXestURL() {
-        let urlLow = URL(string: "https://github.com")!
-        let urlMedium = URL(string: "https://github.com/delannoyk")!
-        let urlHigh = URL(string: "https://github.com/delannoyk/AudioPlayer")!
+        let assetLow = AVURLAsset(url: URL(string: "https://github.com")!)
+        let assetMedium = AVURLAsset(url: URL(string: "https://github.com/delannoyk")!)
+        let assetHigh = AVURLAsset(url: URL(string: "https://github.com/delannoyk/AudioPlayer")!)
 
-        let itemLowOnly = AudioItem(lowQualitySoundURL: urlLow)
-        XCTAssertEqual(itemLowOnly?.lowestQualityURL.url, urlLow)
-        XCTAssertEqual(itemLowOnly?.mediumQualityURL.url, urlLow)
-        XCTAssertEqual(itemLowOnly?.highestQualityURL.url, urlLow)
+        let itemLowOnly = AudioItem(lowQualitySoundAsset: assetLow)
+        XCTAssertEqual(itemLowOnly?.lowestQualityAsset.asset, assetLow)
+        XCTAssertEqual(itemLowOnly?.mediumQualityAsset.asset, assetLow)
+        XCTAssertEqual(itemLowOnly?.highestQualityAsset.asset, assetLow)
 
-        let itemMediumOnly = AudioItem(mediumQualitySoundURL: urlMedium)
-        XCTAssertEqual(itemMediumOnly?.lowestQualityURL.url, urlMedium)
-        XCTAssertEqual(itemMediumOnly?.mediumQualityURL.url, urlMedium)
-        XCTAssertEqual(itemMediumOnly?.highestQualityURL.url, urlMedium)
+        let itemMediumOnly = AudioItem(mediumQualitySoundAsset: assetMedium)
+        XCTAssertEqual(itemMediumOnly?.lowestQualityAsset.asset, assetMedium)
+        XCTAssertEqual(itemMediumOnly?.mediumQualityAsset.asset, assetMedium)
+        XCTAssertEqual(itemMediumOnly?.highestQualityAsset.asset, assetMedium)
 
-        let itemHighOnly = AudioItem(highQualitySoundURL: urlHigh)
-        XCTAssertEqual(itemHighOnly?.lowestQualityURL.url, urlHigh)
-        XCTAssertEqual(itemHighOnly?.mediumQualityURL.url, urlHigh)
-        XCTAssertEqual(itemHighOnly?.highestQualityURL.url, urlHigh)
+        let itemHighOnly = AudioItem(highQualitySoundAsset: assetHigh)
+        XCTAssertEqual(itemHighOnly?.lowestQualityAsset.asset, assetHigh)
+        XCTAssertEqual(itemHighOnly?.mediumQualityAsset.asset, assetHigh)
+        XCTAssertEqual(itemHighOnly?.highestQualityAsset.asset, assetHigh)
 
-        let itemLowMediumOnly = AudioItem(mediumQualitySoundURL: urlMedium, lowQualitySoundURL: urlLow)
-        XCTAssertEqual(itemLowMediumOnly?.lowestQualityURL.url, urlLow)
-        XCTAssertEqual(itemLowMediumOnly?.mediumQualityURL.url, urlMedium)
-        XCTAssertEqual(itemLowMediumOnly?.highestQualityURL.url, urlMedium)
+        let itemLowMediumOnly = AudioItem(mediumQualitySoundAsset: assetMedium, lowQualitySoundAsset: assetLow)
+        XCTAssertEqual(itemLowMediumOnly?.lowestQualityAsset.asset, assetLow)
+        XCTAssertEqual(itemLowMediumOnly?.mediumQualityAsset.asset, assetMedium)
+        XCTAssertEqual(itemLowMediumOnly?.highestQualityAsset.asset, assetMedium)
 
-        let itemLowHighOnly = AudioItem(highQualitySoundURL: urlHigh, lowQualitySoundURL: urlLow)
-        XCTAssertEqual(itemLowHighOnly?.lowestQualityURL.url, urlLow)
-        XCTAssertEqual(itemLowHighOnly?.mediumQualityURL.url, urlLow)
-        XCTAssertEqual(itemLowHighOnly?.highestQualityURL.url, urlHigh)
+        let itemLowHighOnly = AudioItem(highQualitySoundAsset: assetHigh, lowQualitySoundAsset: assetLow)
+        XCTAssertEqual(itemLowHighOnly?.lowestQualityAsset.asset, assetLow)
+        XCTAssertEqual(itemLowHighOnly?.mediumQualityAsset.asset, assetLow)
+        XCTAssertEqual(itemLowHighOnly?.highestQualityAsset.asset, assetHigh)
 
-        let itemMediumHighOnly = AudioItem(highQualitySoundURL: urlHigh, mediumQualitySoundURL: urlMedium)
-        XCTAssertEqual(itemMediumHighOnly?.lowestQualityURL.url, urlMedium)
-        XCTAssertEqual(itemMediumHighOnly?.mediumQualityURL.url, urlMedium)
-        XCTAssertEqual(itemMediumHighOnly?.highestQualityURL.url, urlHigh)
+        let itemMediumHighOnly = AudioItem(highQualitySoundAsset: assetHigh, mediumQualitySoundAsset: assetMedium)
+        XCTAssertEqual(itemMediumHighOnly?.lowestQualityAsset.asset, assetMedium)
+        XCTAssertEqual(itemMediumHighOnly?.mediumQualityAsset.asset, assetMedium)
+        XCTAssertEqual(itemMediumHighOnly?.highestQualityAsset.asset, assetHigh)
 
-        let itemFull = AudioItem(highQualitySoundURL: urlHigh, mediumQualitySoundURL: urlMedium, lowQualitySoundURL: urlLow)
-        XCTAssertEqual(itemFull?.lowestQualityURL.url, urlLow)
-        XCTAssertEqual(itemFull?.mediumQualityURL.url, urlMedium)
-        XCTAssertEqual(itemFull?.highestQualityURL.url, urlHigh)
+        let itemFull = AudioItem(highQualitySoundAsset: assetHigh, mediumQualitySoundAsset: assetMedium, lowQualitySoundAsset: assetLow)
+        XCTAssertEqual(itemFull?.lowestQualityAsset.asset, assetLow)
+        XCTAssertEqual(itemFull?.mediumQualityAsset.asset, assetMedium)
+        XCTAssertEqual(itemFull?.highestQualityAsset.asset, assetHigh)
     }
 
     func testItemURLForQuality() {
-        let urlLow = URL(string: "https://github.com")!
-        let urlMedium = URL(string: "https://github.com/delannoyk")!
-        let urlHigh = URL(string: "https://github.com/delannoyk/AudioPlayer")!
+        let assetLow = AVURLAsset(url: URL(string: "https://github.com")!)
+        let assetMedium = AVURLAsset(url: URL(string: "https://github.com/delannoyk")!)
+        let assetHigh = AVURLAsset(url: URL(string: "https://github.com/delannoyk/AudioPlayer")!)
 
-        let itemLowOnly = AudioItem(lowQualitySoundURL: urlLow)
-        XCTAssertEqual(itemLowOnly?.url(for: .high).quality, .low)
-        XCTAssertEqual(itemLowOnly?.url(for: .medium).quality, .low)
-        XCTAssertEqual(itemLowOnly?.url(for: .low).quality, .low)
+        let itemLowOnly = AudioItem(lowQualitySoundAsset: assetLow)
+        XCTAssertEqual(itemLowOnly?.asset(for: .high).quality, .low)
+        XCTAssertEqual(itemLowOnly?.asset(for: .medium).quality, .low)
+        XCTAssertEqual(itemLowOnly?.asset(for: .low).quality, .low)
 
-        let itemMediumOnly = AudioItem(mediumQualitySoundURL: urlMedium)
-        XCTAssertEqual(itemMediumOnly?.url(for: .high).quality, .medium)
-        XCTAssertEqual(itemMediumOnly?.url(for: .medium).quality, .medium)
-        XCTAssertEqual(itemMediumOnly?.url(for: .low).quality, .medium)
+        let itemMediumOnly = AudioItem(mediumQualitySoundAsset: assetMedium)
+        XCTAssertEqual(itemMediumOnly?.asset(for: .high).quality, .medium)
+        XCTAssertEqual(itemMediumOnly?.asset(for: .medium).quality, .medium)
+        XCTAssertEqual(itemMediumOnly?.asset(for: .low).quality, .medium)
 
-        let itemHighOnly = AudioItem(highQualitySoundURL: urlHigh)
-        XCTAssertEqual(itemHighOnly?.url(for: .high).quality, .high)
-        XCTAssertEqual(itemHighOnly?.url(for: .medium).quality, .high)
-        XCTAssertEqual(itemHighOnly?.url(for: .low).quality, .high)
+        let itemHighOnly = AudioItem(highQualitySoundAsset: assetHigh)
+        XCTAssertEqual(itemHighOnly?.asset(for: .high).quality, .high)
+        XCTAssertEqual(itemHighOnly?.asset(for: .medium).quality, .high)
+        XCTAssertEqual(itemHighOnly?.asset(for: .low).quality, .high)
 
-        let itemLowMediumOnly = AudioItem(mediumQualitySoundURL: urlMedium, lowQualitySoundURL: urlLow)
-        XCTAssertEqual(itemLowMediumOnly?.url(for: .high).quality, .medium)
-        XCTAssertEqual(itemLowMediumOnly?.url(for: .medium).quality, .medium)
-        XCTAssertEqual(itemLowMediumOnly?.url(for: .low).quality, .low)
+        let itemLowMediumOnly = AudioItem(mediumQualitySoundAsset: assetMedium, lowQualitySoundAsset: assetLow)
+        XCTAssertEqual(itemLowMediumOnly?.asset(for: .high).quality, .medium)
+        XCTAssertEqual(itemLowMediumOnly?.asset(for: .medium).quality, .medium)
+        XCTAssertEqual(itemLowMediumOnly?.asset(for: .low).quality, .low)
 
-        let itemLowHighOnly = AudioItem(highQualitySoundURL: urlHigh, lowQualitySoundURL: urlLow)
-        XCTAssertEqual(itemLowHighOnly?.url(for: .high).quality, .high)
-        XCTAssertEqual(itemLowHighOnly?.url(for: .medium).quality, .low)
-        XCTAssertEqual(itemLowHighOnly?.url(for: .low).quality, .low)
+        let itemLowHighOnly = AudioItem(highQualitySoundAsset: assetHigh, lowQualitySoundAsset: assetLow)
+        XCTAssertEqual(itemLowHighOnly?.asset(for: .high).quality, .high)
+        XCTAssertEqual(itemLowHighOnly?.asset(for: .medium).quality, .low)
+        XCTAssertEqual(itemLowHighOnly?.asset(for: .low).quality, .low)
 
-        let itemMediumHighOnly = AudioItem(highQualitySoundURL: urlHigh, mediumQualitySoundURL: urlMedium)
-        XCTAssertEqual(itemMediumHighOnly?.url(for: .high).quality, .high)
-        XCTAssertEqual(itemMediumHighOnly?.url(for: .medium).quality, .medium)
-        XCTAssertEqual(itemMediumHighOnly?.url(for: .low).quality, .medium)
+        let itemMediumHighOnly = AudioItem(highQualitySoundAsset: assetHigh, mediumQualitySoundAsset: assetMedium)
+        XCTAssertEqual(itemMediumHighOnly?.asset(for: .high).quality, .high)
+        XCTAssertEqual(itemMediumHighOnly?.asset(for: .medium).quality, .medium)
+        XCTAssertEqual(itemMediumHighOnly?.asset(for: .low).quality, .medium)
 
-        let itemFull = AudioItem(highQualitySoundURL: urlHigh, mediumQualitySoundURL: urlMedium, lowQualitySoundURL: urlLow)
-        XCTAssertEqual(itemFull?.url(for: .high).quality, .high)
-        XCTAssertEqual(itemFull?.url(for: .medium).quality, .medium)
-        XCTAssertEqual(itemFull?.url(for: .low).quality, .low)
+        let itemFull = AudioItem(highQualitySoundAsset: assetHigh, mediumQualitySoundAsset: assetMedium, lowQualitySoundAsset: assetLow)
+        XCTAssertEqual(itemFull?.asset(for: .high).quality, .high)
+        XCTAssertEqual(itemFull?.asset(for: .medium).quality, .medium)
+        XCTAssertEqual(itemFull?.asset(for: .low).quality, .low)
     }
 
     func testParseMetadata() {
@@ -110,7 +110,7 @@ class AudioItem_Tests: XCTestCase {
             FakeMetadataItem(commonKey: AVMetadataKey.commonKeyArtwork, value: imageData)
         ]
 
-        let item = AudioItem(soundURLs: [.low: URL(string: "https://github.com")!])
+        let item = AudioItem(assets: [.low: AVURLAsset(url: URL(string: "https://github.com")!)])
         item?.parseMetadata(metadata)
 
         XCTAssertEqual(item?.title, "title")
@@ -121,7 +121,7 @@ class AudioItem_Tests: XCTestCase {
     }
 
     func testParseMetadataDoesNotOverrideUserProperties() {
-        let item = AudioItem(soundURLs: [.low: URL(string: "https://github.com")!])
+        let item = AudioItem(assets: [.low: AVURLAsset(url: URL(string: "https://github.com")!)])
         item?.title = "title"
         item?.artist = "artist"
         item?.album = "album"

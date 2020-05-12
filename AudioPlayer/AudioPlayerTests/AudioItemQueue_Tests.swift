@@ -7,12 +7,13 @@
 //
 
 import XCTest
+import AVFoundation
 @testable import AudioPlayer
 
 class AudioItemQueue_Tests: XCTestCase {
-    let item1 = AudioItem(highQualitySoundURL: URL(string: "https://github.com"))!
-    let item2 = AudioItem(highQualitySoundURL: URL(string: "https://github.com/delannoyk"))!
-    let item3 = AudioItem(highQualitySoundURL: URL(string: "https://google.com"))!
+    let item1 = AudioItem(highQualitySoundAsset: AVURLAsset(url: URL(string: "https://github.com")!))!
+    let item2 = AudioItem(highQualitySoundAsset: AVURLAsset(url: URL(string: "https://github.com/delannoyk")!))!
+    let item3 = AudioItem(highQualitySoundAsset: AVURLAsset(url: URL(string: "https://google.com")!))!
 
     private class MockDelegate: AudioItemQueueDelegate {
         private let ununavailableItems: [AudioItem]
