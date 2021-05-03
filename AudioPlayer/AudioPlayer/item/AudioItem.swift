@@ -206,8 +206,9 @@ open class AudioItem: NSObject {
                 artwork = newValue.map { image in
                     if #available(iOS 10.0, tvOS 10.0, *) {
                         return MPMediaItemArtwork(boundsSize: image.size) { _ in image }
+                    } else {
+                        return MPMediaItemArtwork(image: image)
                     }
-                    return MPMediaItemArtwork(image: image)
                 }
             #endif
         }

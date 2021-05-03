@@ -34,10 +34,10 @@ class FakeReachability: Reachability {
 class FakeItem: AVPlayerItem {
     var bufferEmpty = true {
         willSet {
-            willChangeValue(forKey: #keyPath(AVPlayerItem.playbackBufferEmpty))
+            willChangeValue(forKey: #keyPath(AVPlayerItem.isPlaybackBufferEmpty))
         }
         didSet {
-            didChangeValue(forKey: #keyPath(AVPlayerItem.playbackBufferEmpty))
+            didChangeValue(forKey: #keyPath(AVPlayerItem.isPlaybackBufferEmpty))
         }
     }
 
@@ -47,10 +47,10 @@ class FakeItem: AVPlayerItem {
 
     var likelyToKeepUp = false {
         willSet {
-            willChangeValue(forKey: #keyPath(AVPlayerItem.playbackLikelyToKeepUp))
+            willChangeValue(forKey: #keyPath(AVPlayerItem.isPlaybackLikelyToKeepUp))
         }
         didSet {
-            didChangeValue(forKey: #keyPath(AVPlayerItem.playbackLikelyToKeepUp))
+            didChangeValue(forKey: #keyPath(AVPlayerItem.isPlaybackLikelyToKeepUp))
         }
     }
 
